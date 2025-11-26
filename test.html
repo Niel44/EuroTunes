@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>EuroTunes - Test</title>
+    <link rel="icon" type="image/png" href="/EuroTunes/Logo EuroTunes rm.png"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="test.css">
+</head>
+<body>
+    <div class="canvas">
+        <div class="left-col">
+            <div id="map" class="map-placeholder"></div>
+        </div>
+
+        <aside class="right-col">
+            <div class="card">
+                <div class="header">
+                        <div class="header-left">
+                            <img class="logo-img" src="/EuroTunes/Logo EuroTunes rm.png" alt="logo">
+                            <div class="title-block">
+                                <div class="title">EuroTunes</div>
+                                <div class="discover">Discover Europe’s Music</div>
+                            </div>
+                        </div>
+                        <div id="auth-bar">
+                            <button id="login-button" class="auth-btn">Login met Spotify</button>
+                            <button id="logout-button" class="auth-btn" style="display:none;">Uitloggen</button>
+                        </div>
+                </div>
+                <div id="info-paneel" class="info-pane">
+                    <h2 id="land-naam">Selecteer een land</h2>
+                    <img id="land-vlag" src="" alt="">
+                    <p><strong>Hoofdstad:</strong> <span id="land-hoofdstad"></span></p>
+                    <p id="land-info-tekst"></p>
+
+                    <h3 class="top10-title">Top 10:</h3>
+                    <div id="top-10-lijst" class="top-10-scroll"></div>
+                </div>
+            </div>
+        </aside>
+
+        <div id="notification-container"></div>
+
+        <div id="player-bar">
+            <div id="player-info">
+                <img id="player-cover" src="" alt="cover" />
+                <div>
+                    <div id="player-title">Geen nummer geselecteerd</div>
+                    <div id="player-artist"></div>
+                </div>
+            </div>
+            <div id="player-controls">
+                <button id="prev-btn">⏮</button>
+                <button id="play-pause-btn">▶️</button>
+                <button id="next-btn">⏭</button>
+            </div>
+            <div id="player-progress">
+                <input type="range" id="progress-bar" value="0" min="0" max="100">
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://sdk.scdn.co/spotify-player.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

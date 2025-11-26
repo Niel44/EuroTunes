@@ -1,0 +1,226 @@
+html, body { height: 100%; }
+body {
+    margin: 0;
+    background: var(--bg, #F0FDF4);
+    font-family: 'Poppins', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow: hidden; /* prevent page scroll; songs list will scroll */
+}
+
+:root{
+    --primary-green: #10B981;
+    --dark-green: #065F46;
+    --light-green: #DCFCE7;
+    --light-green-600: #c9efd9; /* hover */
+    --control-bg: #bfbfbfd9; /* default grey circle */
+    --control-bg-hover: #8f8f8fbf; /* darker on hover */
+    --control-icon: var(--primary-green);
+    --control-icon-hover: #047153; /* slightly darker green on hover */
+}
+
+/* LEFT SIDE: MAP */
+#map {
+    width: 101%;
+    height: 104%;
+    border-radius: 6px;
+    box-shadow: 0 4px 18px rgba(2,6,23,0.08);
+    background: #e6eef3;
+}
+
+/* RIGHT SIDE: INFO PANEL */
+.canvas {
+    width: 1488px; /* slightly wider so columns can expand */
+    margin: 6px auto; /* smaller bezel */
+    position: relative;
+    height: 100vh;
+}
+
+.left-col {
+    position: absolute;
+    left: 0; /* align to very left of canvas to avoid overlap */
+    top: 6px;
+    width: 980px; /* increased width */
+    height: calc(100vh - 132px);
+    z-index: 1;
+}
+
+.right-col {
+    position: absolute;
+    right: 0; /* align to very right of canvas */
+    top: 0px;
+    width: 500px; /* increased width */
+    height: calc(100vh - 132px);
+    z-index: 50; /* ensure info panel appears above the map and player */
+}
+
+.card {
+    width: 484px; /* wider card to use increased right column */
+    margin: 6px 8px;
+    background: #f4fdf7;
+    border-radius: 16px;
+    padding: 10px; /* reduce padding to bring content closer to edges */
+    box-sizing: border-box;
+    box-shadow: 0 4px 18px rgba(2,6,23,0.06);
+    position: relative;
+    z-index: 60; /* make sure card content can overlay player */
+    height: 104%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.header{ display:flex; align-items:center; justify-content:space-between; gap:12px }
+.header-left{ display:flex; align-items:center; gap:12px }
+.logo-img{ width:65px; height:65px; border-radius:8px; object-fit:cover }
+.title-block{ display:flex; flex-direction:column }
+.title{ color:#065F46; font-size:24px; font-weight:700; line-height:1 }
+.discover{ color:#065F46; font-size:13px; margin-top:4px }
+
+#auth-bar{ display:flex; gap:8px }
+
+#info-paneel{ margin-top:8px; /* move country info higher under title/slogan */
+    padding-bottom: 12px; /* small internal padding */
+    position: relative;
+    z-index: 60;
+    flex: 1 1 auto; /* allow info panel to grow and scroll inside the card */
+    overflow: auto;
+}
+#info-paneel h2{ text-align:center; color:#065F46; font-size:32px; margin:0 0 8px }
+#land-vlag{ display:block; width:120px; margin:12px auto; border-radius:6px }
+#info-paneel p{ color:#065F46 }
+#land-info-tekst{ color:#065F46; margin-top:8px }
+
+.top10-title{ margin-top:24px; color:var(--dark-green); font-size:16px }
+
+#top-10-lijst{ margin-top:12px; display:flex; flex-direction:column; gap:12px }
+.top-10-scroll {
+    /* let the list take available space inside the scrollable info panel */
+    overflow-y: auto;
+    padding-right: 6px;
+    position: relative;
+    z-index: 60; /* ensure songs render above the player */
+}
+.song{ background:var(--light-green); border-radius:10px; padding:12px 14px; display:flex; align-items:center; gap:12px; cursor:pointer; transition: background 0.12s ease, transform 0.08s ease }
+.song-number{ font-weight:700; color:var(--dark-green); width:28px }
+.song .meta{ display:flex; flex-direction:column }
+.song .meta .title{ color:var(--dark-green); font-weight:600 }
+.song .meta .artist{ color:var(--dark-green); opacity:0.85; font-size:13px }
+.song:hover{ background: var(--light-green-600); transform: translateY(-1px) }
+
+/* Styles for the markup created by app.js (uses <b> and <span>) */
+.song b { color: var(--dark-green); font-weight:700 }
+.song span { color: var(--dark-green); opacity:0.85; font-size:13px }
+
+
+/* ---- PLAYER BAR ---- */
+#player-bar{
+    position:absolute;
+    left:0px; /* small bezel */
+    bottom:8px;
+    width:1480px; /* match canvas width minus small bezel */
+    height:88px; /* slightly reduced vertical size */
+    background: #10B981;;
+    border-radius:16px;
+    display:flex; align-items:center; gap:14px; padding:10px 16px; box-sizing:border-box; color:var(--light-green,#DCFCE7);
+    z-index: 10; /* lower than info panel so songs can appear above */
+}
+
+/* COVER ART */
+#player-cover{ width:64px; height:64px; border-radius:10px; object-fit:cover; background:#D9D9D9 }
+
+/* TRACK INFO */
+#player-info{ display:flex; align-items:center; gap:15px; min-width:0 }
+#player-title{ color:var(--light-green,#DCFCE7); font-size:20px }
+#player-artist{ color:var(--light-green,#DCFCE7); opacity:0.95; font-size:14px }
+
+/* CONTROLS */
+#player-controls{ display:flex; align-items:center; gap:14px }
+/* generic control buttons */
+#player-controls button{
+    background: transparent;
+    border: none;
+    width: 48px;
+    height: 48px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    cursor: pointer;
+    color: var(--light-green);
+    transition: transform 0.12s ease, background 0.12s ease, color 0.12s ease;
+    padding: 0;
+}
+
+/* Prev/Next buttons: grey circular background with green icon; hover -> darker grey + darker green */
+#player-controls #prev-btn,
+#player-controls #next-btn {
+    background: var(--control-bg);
+    color: var(--control-icon);
+    border-radius: 50%; /* make square -> circle */
+}
+#player-controls #prev-btn:hover,
+#player-controls #next-btn:hover {
+    background: var(--control-bg-hover);
+    color: var(--control-icon-hover);
+    transform: translateY(-3px);
+}
+
+/* play button is larger: grey circular background with green play/pause icon; hover -> darker */
+#player-controls #play-pause-btn{
+    width:60px; /* slightly smaller circle */
+    height:60px;
+    border-radius:30px;
+    background: var(--control-bg);
+    color: var(--control-icon);
+    display:inline-flex; align-items:center; justify-content:center;
+    box-shadow: 0 5px 16px rgba(2,6,23,0.16);
+    transition: transform 0.12s ease, background 0.12s ease, color 0.12s ease;
+}
+#player-controls #play-pause-btn:hover{
+    background: var(--control-bg-hover);
+    color: var(--control-icon-hover);
+    transform: translateY(-3px);
+}
+
+/* hover states */
+#player-controls button:hover{ transform: translateY(-3px); }
+#player-controls button:hover svg { opacity: 0.95 }
+
+/* SVG sizing and coloring */
+#player-controls svg{ width:22px; height:22px }
+#player-controls svg g, #player-controls svg path { stroke: currentColor }
+#player-controls svg path[fill]{ fill: currentColor }
+
+/* Slightly larger icon inside the main play button */
+#player-controls #play-pause-btn svg{ width:34px; height:34px }
+
+/* PROGRESS BAR */
+/* PROGRESS / SLIDER */
+#player-progress{ flex-grow:1 }
+#progress-bar{ width:100%; height:8px; border-radius:6px; background: #e6f3ea; -webkit-appearance:none; appearance:none; outline:none; }
+
+#progress-bar::-moz-range-track{ width:100%; height:8px; border-radius:6px }
+#progress-bar::-moz-range-thumb{ width:14px; height:14px; border-radius:50%; background:#065F46; border:none }
+
+/* WebKit (Chrome, Safari) */
+#progress-bar::-webkit-slider-runnable-track{ height:8px; background:#e6f3ea; border-radius:6px }
+#progress-bar::-webkit-slider-thumb{ -webkit-appearance:none; appearance:none; width:14px; height:14px; border-radius:50%; background:var(--primary-green); margin-top:-3px; box-shadow:0 0 0 6px rgba(16,185,129,0.12) }
+
+/* modern fallback */
+#progress-bar{ accent-color:#065F46; }
+#login-button, #logout-button{ background:#0000001a; color:#065F46; border:none; padding:8px 14px; border-radius:10px }
+#logout-button{ background:#0000001a }
+#login-button, #logout-button{ transition: background 0.15s ease, transform 0.12s ease }
+#login-button:hover{ background:#10B981; transform: translateY(-1px) }
+#logout-button:hover{ background:#d44d63; transform: translateY(-1px) }
+
+/* --- Meldingen gecentreerd --- */
+#notification-container{ position:absolute; left:50%; transform:translateX(-50%); top:20px; z-index:3000 }
+.notification{ background:#0b0c48; color:#F0FDF4; padding:10px 20px; border-radius:6px; margin-top:8px; opacity:0.95; animation: fadeInOut 3s forwards }
+
+@keyframes fadeInOut{ 0%{ opacity:0; transform:translateY(-10px) } 10%{ opacity:0.95; transform:translateY(0) } 90%{ opacity:0.95 } 100%{ opacity:0; transform:translateY(-10px) } }
+
+/* small helper */
+.map-placeholder{ display:block }
+
