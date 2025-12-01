@@ -1,4 +1,6 @@
 <?php
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 require 'config.php';
 // 1. Haal de landcode op uit de URL (bijv. getLandInfo.php?code=NL)
 if (empty($_GET['code'])) {
@@ -6,7 +8,7 @@ if (empty($_GET['code'])) {
 }
 $land_code = $_GET['code'];
 
-$conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli($host, $username, $password, $dbname, $port);
 
 // 3. Check verbinding
 if ($conn->connect_error) {

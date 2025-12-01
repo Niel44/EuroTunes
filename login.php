@@ -25,7 +25,7 @@ $authorize_url = 'https://accounts.spotify.com/authorize?' . http_build_query([
     'response_type' => 'code',
     'client_id' => $spotifyClientId,
     'scope' => implode(' ', $scopes),
-    'redirect_uri' => 'http://127.0.0.1:80/EuroTunes/callback.php', // moet exact overeenkomen met wat je in Spotify Dashboard hebt opgegeven
+    'redirect_uri' => 'https://i580580.hera.fontysict.net/EuroTunes/callback.php', // moet exact overeenkomen met wat je in Spotify Dashboard hebt opgegeven
 ]);
 
 // 4️⃣ Stuur de gebruiker door naar Spotify’s loginpagina

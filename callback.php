@@ -20,7 +20,7 @@ curl_setopt($ch, CURLOPT_POST, true);
 curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query([
     'grant_type' => 'authorization_code',
     'code' => $code,
-    'redirect_uri' => 'http://127.0.0.1:80/EuroTunes/callback.php' // ✅ exact zelfde als login.php
+    'redirect_uri' => 'https://i580580.hera.fontysict.net/EuroTunes/callback.php' // ✅ exact zelfde als login.php
 ]));
 curl_setopt($ch, CURLOPT_HTTPHEADER, [
     'Authorization: Basic ' . $authHeader,
